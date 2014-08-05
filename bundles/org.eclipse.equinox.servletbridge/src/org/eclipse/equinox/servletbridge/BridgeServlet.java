@@ -93,6 +93,8 @@ public class BridgeServlet extends HttpServlet {
 		setInstance(this);
 		try {
 			framework.init(getServletConfig());
+            // update osgi if undeployed incorrect
+            framework.undeploy();
 			framework.deploy();
 			framework.start();
 			frameworkStarted = true;
@@ -107,6 +109,7 @@ public class BridgeServlet extends HttpServlet {
 	 */
 	public void destroy() {
 		framework.stop();
+        framework.undeploy();
 		framework.destroy();
 		setInstance(null);
 		super.destroy();
